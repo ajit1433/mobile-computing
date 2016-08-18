@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Prime Hunter :D</string>
+    <string name="buttonNext">Next</string>
+    <string name="buttonYES">Yes</string>
+    <string name="buttonNO">No</string>
+    <string name="descriptionStr">\'Yes\' if number is Prime,\n \'No\' if not prime.\n \'Next\' to get new number.</string>
+    <string name="quesStr1">Is number </string>
+    <string name="quesStr2">xxxx</string>
+    <string name="quesStr3"> prime?</string>
+</resources>
