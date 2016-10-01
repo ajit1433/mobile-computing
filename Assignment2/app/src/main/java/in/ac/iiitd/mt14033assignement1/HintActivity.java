@@ -10,18 +10,19 @@ public class HintActivity extends AppCompatActivity {
 
     final String TAG = "HINT";
     private Boolean flag = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_hint);
 
-        Log.d(TAG,"In Hint onCreate");
+        Log.d(TAG, "In Hint onCreate");
         flag = true;
     }
 
     @Override
     public void onBackPressed() {
-        Log.d(TAG,"in onBackPressed");
+        Log.d(TAG, "in onBackPressed");
         Intent resultIntent = new Intent();
         resultIntent.putExtra("hint_flag", flag);
         setResult(Activity.RESULT_OK, resultIntent);

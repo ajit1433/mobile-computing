@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Password Manager</string>
+    <string name="password_length">Length</string>
+    <string name="password_url">Website</string>
+    <string name="generate_password_button_text">Generate</string>
+    <string name="generated_password">Password</string>
+</resources>

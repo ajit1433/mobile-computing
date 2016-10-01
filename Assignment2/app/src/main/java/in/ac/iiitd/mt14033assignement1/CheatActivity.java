@@ -49,7 +49,7 @@ public class CheatActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Log.d(TAG,"in onBackPressed");
+        Log.d(TAG, "in onBackPressed");
         Intent resultIntent = new Intent();
         resultIntent.putExtra("cheat_flag", flag);
         setResult(Activity.RESULT_OK, resultIntent);

@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     public int getRandom() {
         return rand.nextInt(200);
     }
+
     public boolean isPrime(int n) {
         int i;
         for (i = 2; i < n; i++) {
@@ -65,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         btnYes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"in btnNext");
+                Log.d(TAG, "in btnNext");
 
                 btnYes.setEnabled(false);
                 btnNo.setEnabled(false);
@@ -88,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Log.d(TAG,"in btnNext");
+                Log.d(TAG, "in btnNext");
                 btnYes.setEnabled(false);
                 btnNo.setEnabled(false);
                 btnNext.setEnabled(false);
@@ -110,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"in btnNext");
+                Log.d(TAG, "in btnNext");
 
                 randomNum = getRandom();
-                Log.d(TAG,"nextRandom: "+Integer.toString(randomNum));
+                Log.d(TAG, "nextRandom: " + Integer.toString(randomNum));
                 numberPrime.setText(Integer.toString(randomNum));
                 btnYes.setEnabled(true);
                 btnNo.setEnabled(true);
@@ -127,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
         btnHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"in btnHint");
+                Log.d(TAG, "in btnHint");
 
                 Intent myIntent1 = new Intent(MainActivity.this, HintActivity.class);
                 startActivityForResult(myIntent1, 1);
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         btnCheat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG,"in btnCheat");
+                Log.d(TAG, "in btnCheat");
 
                 int num = Integer.parseInt(numberPrime.getText().toString());
                 Intent myIntent2 = new Intent(MainActivity.this, CheatActivity.class);
@@ -159,18 +160,18 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 1) { // HINT
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 Boolean hintFlag = data.getBooleanExtra("hint_flag", false);
-                Log.d(TAG,"back from hint "+Boolean.toString(hintFlag));
+                Log.d(TAG, "back from hint " + Boolean.toString(hintFlag));
                 Toast toast = Toast.makeText(getApplicationContext(), "You used HINT...", Toast.LENGTH_SHORT);
                 toast.show();
             }
         }
 
         if (requestCode == 2) { // CHEAT
-            if(resultCode == RESULT_OK){
+            if (resultCode == RESULT_OK) {
                 Boolean cheatFlag = data.getBooleanExtra("cheat_flag", false);
-                Log.d(TAG,"back from cheat "+Boolean.toString(cheatFlag));
+                Log.d(TAG, "back from cheat " + Boolean.toString(cheatFlag));
                 btnYes.setEnabled(false);
                 btnNo.setEnabled(false);
                 btnHint.setEnabled(false);
@@ -226,14 +227,14 @@ public class MainActivity extends AppCompatActivity {
         super.onDestroy();
         Log.d(TAG, "Inside OnDestroy");
     }
+
     @Override
     public void onBackPressed() {
         new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.sym_def_app_icon)
                 .setTitle("Why :.....(")
                 .setMessage("Are you sure you want to leave?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                {
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         finish();
