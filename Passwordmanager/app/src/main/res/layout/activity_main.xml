@@ -1,91 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?>
 <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:layout_margin="@dimen/activity_horizontal_margin">
 
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="in.ac.iiitd.mt14033.passwordmanager.MainActivity">
-
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
-
+    <TableRow>
         <TextView
+            android:text="@string/password_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:id="@+id/password_length_field_text"
-            android:text="@string/password_length" />
-
+            android:layout_column="1" />
         <EditText
+            android:width="200dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="200px"
-            android:id="@+id/password_length"
-            android:inputType="number" />
+            android:inputType="number"
+            android:id="@+id/password_length"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/save_preferred_password_length_button_text"
+            android:id="@+id/save_preferred_password_length_button"
+            android:layout_column="2" />
     </TableRow>
 
     <TableRow>
-
         <TextView
+            android:text="@string/password_url"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:text="@string/password_url" />
-
+            android:layout_column="1" />
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:width="200px" />
+            android:inputType="textUri"
+            android:id="@+id/password_url"/>
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/generate_password_button_text"
+            android:id="@+id/generate_password_button"
+            android:layout_column="2" />
     </TableRow>
 
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:height="50px" />
-
+        android:minHeight="30dp"/>
     <TableRow
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
-        <Button
-            android:id="@+id/button"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="2"
-            android:text="@string/generate_password_button_text" />
-    </TableRow>
-
-    <TableRow>
+            android:layout_marginRight="10dp"
+            android:text="@string/generated_password"
+            android:layout_column="1" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_column="1"
-            android:text="@string/generate_password_button_text" />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:width="100px" />
+            android:id="@+id/generated_password"
+            android:layout_column="2"
+            />
     </TableRow>
 
     <TableRow
         android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
+    <TableRow
+        android:layout_width="fill_parent"
         android:layout_height="fill_parent">
-
-        <RatingBar
-            android:id="@+id/ratingBar"
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/save_password_button_text"
+            android:id="@+id/save_generated_password_button"
             android:layout_column="2" />
     </TableRow>
-
-
-
 
 </TableLayout>
