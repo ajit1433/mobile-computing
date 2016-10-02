@@ -5,7 +5,8 @@
     <string name="generate_password_button_text">Generate</string>
     <string name="generated_password">Password</string>
     <string name="save_password_button_text">Save</string>
-    <string name="save_preferred_password_length_button_text">Save</string>
+    <string name="save_preferred_password_length_button_text">Save preference</string>
+    <string name="backup_button_text">Backup</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

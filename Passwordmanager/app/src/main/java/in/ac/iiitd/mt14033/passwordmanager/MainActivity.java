@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.URLUtil;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Button generatePasswordButton;
     private Button savePasswordButton;
     private Button savePreferredPasswordLengthButton;
+    private Button backupButton;
 
 
     private int get_preferred_password_length() {
@@ -63,8 +65,11 @@ public class MainActivity extends AppCompatActivity {
         final Button generatePasswordButton = (Button) findViewById(R.id.generate_password_button);
         final Button savePasswordButton = (Button) findViewById(R.id.save_generated_password_button);
         final Button saveLengthPreferenceButton = (Button) findViewById(R.id.save_preferred_password_length_button);
+        final Button backupButton = (Button) findViewById(R.id.backup_button);
 
         generatePasswordButton.setEnabled(true);
+        saveLengthPreferenceButton.setEnabled(true);
+        backupButton.setEnabled(true);
         savePasswordButton.setEnabled(false);
 
         int preferred_password_length = get_preferred_password_length();
@@ -102,6 +107,29 @@ public class MainActivity extends AppCompatActivity {
                 generatedPassword.setText(password);
                 savePasswordButton.setEnabled(true);
             }
+        });
+
+        savePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "in savePasswordButton");
+
+                String url = passwordUrl.getText().toString();
+                if (!URLUtil.isValidUrl(url)) {
+                    Log.d(TAG, "invalid URL");
+                    Toast toast = Toast.makeText(getApplicationContext(), "Invalid URL.", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+                String password = generatedPassword.getText().toString();
+                Log.d(TAG, "Url:"+ url);
+                Log.d(TAG, "Password:"+ password);
+
+                // code to add in sqlite db
+
+                savePasswordButton.setEnabled(true);
+            }
+
         });
     }
 

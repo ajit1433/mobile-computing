@@ -15,6 +15,9 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:id="@+id/password_length"/>
+    </TableRow>
+
+    <TableRow>
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -83,6 +86,22 @@
             android:layout_height="wrap_content"
             android:text="@string/save_password_button_text"
             android:id="@+id/save_generated_password_button"
+            android:layout_column="2" />
+    </TableRow>
+
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:minHeight="20dp"/>
+    <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="bottom">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/backup_button_text"
+            android:id="@+id/backup_button"
             android:layout_column="2" />
     </TableRow>
 
