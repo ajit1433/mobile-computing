@@ -72,6 +72,8 @@ public class MainActivity extends AppCompatActivity {
         backupButton.setEnabled(true);
         savePasswordButton.setEnabled(false);
 
+        final DBHelper dbh = new DBHelper(this);
+
         int preferred_password_length = get_preferred_password_length();
         passwordLength.setText(Integer.toString(preferred_password_length));
         Toast toast = Toast.makeText(getApplicationContext(), "Preferred Password Length loaded from SharedPreferences ", Toast.LENGTH_SHORT);
@@ -125,8 +127,17 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Url:"+ url);
                 Log.d(TAG, "Password:"+ password);
 
-                // code to add in sqlite db
+                String userid = getIntent().getExtras().getString("mEmail");
 
+                // code to add in sqlite db
+                dbh.getWritableDatabase();
+                PasswordManager pm = new PasswordManager();
+
+                pm.setPassword(password);
+                pm.setUrl(url);
+                pm.setUserId(userid);
+
+                dbh.addPassword(pm);
                 savePasswordButton.setEnabled(true);
             }
 

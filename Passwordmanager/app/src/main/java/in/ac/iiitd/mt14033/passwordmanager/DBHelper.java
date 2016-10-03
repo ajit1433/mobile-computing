@@ -17,19 +17,19 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 3;
 
     // Database Name
     private static final String DATABASE_NAME = "PasswordManager.sqlitedb";
 
-    // Contacts table name
+    // Passwords table name
     private static final String TABLE_PASSWORDS = "passwords";
 
-    // Contacts Table Columns names
+    // Passwords Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_USERID = "userid";
     private static final String KEY_URL = "url";
-    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_PASSWORD = "pwd";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -38,8 +38,8 @@ public class DBHelper extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_PASSWORDS + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERID + " TEXT," + KEY_URL + " TEXT," + KEY_PASSWORD + "TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+        String CREATE_PASSWORD_TABLE = "CREATE TABLE " + TABLE_PASSWORDS + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERID + " TEXT," + KEY_URL + " TEXT," + KEY_PASSWORD + "TEXT" + ")";
+        db.execSQL(CREATE_PASSWORD_TABLE);
     }
 
     // Upgrading database
@@ -87,7 +87,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Getting All passwords
-    public List<PasswordManager> getAllContacts() {
+    public List<PasswordManager> getAllPasswords() {
         List<PasswordManager> pmList = new ArrayList<PasswordManager>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_PASSWORDS;
@@ -113,7 +113,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     // Updating single password
-    public int updateContact(PasswordManager pm) {
+    public int updatePassword(PasswordManager pm) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
