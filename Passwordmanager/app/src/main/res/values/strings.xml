@@ -8,6 +8,12 @@
     <string name="save_preferred_password_length_button_text">Save preference</string>
     <string name="backup_button_text">Backup</string>
     <string name="title_activity_login">Sign in</string>
+    <string name="password_list">Password List</string>
+    <string name="load">Reload</string>
+    <string name="update">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

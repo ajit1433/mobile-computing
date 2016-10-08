@@ -1,19 +1,26 @@
 package in.ac.iiitd.mt14033.passwordmanager;
 
+import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.webkit.URLUtil;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     private Button savePasswordButton;
     private Button savePreferredPasswordLengthButton;
     private Button backupButton;
-
+    private Button passwordListButton;
 
     private int get_preferred_password_length() {
         Log.d(TAG, "in RestorePreferencePasswordLength");
@@ -66,19 +73,29 @@ public class MainActivity extends AppCompatActivity {
         final Button savePasswordButton = (Button) findViewById(R.id.save_generated_password_button);
         final Button saveLengthPreferenceButton = (Button) findViewById(R.id.save_preferred_password_length_button);
         final Button backupButton = (Button) findViewById(R.id.backup_button);
+        final Button passwordListButton = (Button) findViewById(R.id.password_list_button);
+
 
         generatePasswordButton.setEnabled(true);
         saveLengthPreferenceButton.setEnabled(true);
         backupButton.setEnabled(true);
         savePasswordButton.setEnabled(false);
 
-        final DBHelper dbh = new DBHelper(this);
-
         int preferred_password_length = get_preferred_password_length();
         passwordLength.setText(Integer.toString(preferred_password_length));
         Toast toast = Toast.makeText(getApplicationContext(), "Preferred Password Length loaded from SharedPreferences ", Toast.LENGTH_SHORT);
         toast.show();
 
+        final DBHelper dbh = new DBHelper(this);
+
+        passwordListButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "in passwordListButton");
+                Intent list_password = new Intent(getApplicationContext(),ListPassword.class);
+                startActivity(list_password);
+            }
+        });
         saveLengthPreferenceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
                 String userid = getIntent().getExtras().getString("mEmail");
 
                 // code to add in sqlite db
-                dbh.getWritableDatabase();
+                //dbh.getWritableDatabase();
                 PasswordManager pm = new PasswordManager();
 
                 pm.setPassword(password);
@@ -138,7 +155,18 @@ public class MainActivity extends AppCompatActivity {
                 pm.setUserId(userid);
 
                 dbh.addPassword(pm);
-                savePasswordButton.setEnabled(true);
+                Toast toast = Toast.makeText(getApplicationContext(), "Password saved in SqliteDB ", Toast.LENGTH_SHORT);
+                toast.show();
+                savePasswordButton.setEnabled(false);
+            }
+
+        });
+
+        backupButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "in backupButton");
+                backupButton.setEnabled(true);
             }
 
         });

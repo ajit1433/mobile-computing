@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +16,10 @@ import java.util.List;
 
 public class DBHelper extends SQLiteOpenHelper {
 
+    final String TAG = "mt14033.SQLAct";
     // All Static variables
     // Database Version
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 11;
 
     // Database Name
     private static final String DATABASE_NAME = "PasswordManager.sqlitedb";
@@ -26,11 +28,10 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String TABLE_PASSWORDS = "passwords";
 
     // Passwords Table Columns names
-    private static final String KEY_ID = "id";
-    private static final String KEY_USERID = "userid";
-    private static final String KEY_URL = "url";
-    private static final String KEY_PASSWORD = "pwd";
-
+    protected static final String KEY_ID = "_id";
+    protected static final String KEY_USERID = "userid";
+    protected static final String KEY_URL = "url";
+    protected static final String KEY_PASSWORD = "password";
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -38,7 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_PASSWORD_TABLE = "CREATE TABLE " + TABLE_PASSWORDS + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_USERID + " TEXT," + KEY_URL + " TEXT," + KEY_PASSWORD + "TEXT" + ")";
+        String CREATE_PASSWORD_TABLE = "CREATE TABLE " + TABLE_PASSWORDS + "( " + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," + KEY_USERID + " TEXT," + KEY_URL + " TEXT," + KEY_PASSWORD + " TEXT);";
         db.execSQL(CREATE_PASSWORD_TABLE);
     }
 
@@ -58,6 +59,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     // Adding new password
     void addPassword(PasswordManager pm) {
+
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -82,34 +84,23 @@ public class DBHelper extends SQLiteOpenHelper {
 
         PasswordManager pm = new PasswordManager(Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1), cursor.getString(2), cursor.getString(3));
-        // return password
+
+        Log.d(TAG,"UserId1: "+pm.getUserId());
+        Log.d(TAG,"Url1: "+pm.getUrl());
+        Log.d(TAG,"Password1: "+pm.getPassword());
         return pm;
     }
 
     // Getting All passwords
-    public List<PasswordManager> getAllPasswords() {
-        List<PasswordManager> pmList = new ArrayList<PasswordManager>();
+    public Cursor getAllPasswords() {
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_PASSWORDS;
+        String selectQuery = "SELECT * FROM " + TABLE_PASSWORDS;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                PasswordManager pm = new PasswordManager();
-                pm.setID(Integer.parseInt(cursor.getString(0)));
-                pm.setUserId(cursor.getString(1));
-                pm.setUrl(cursor.getString(2));
-                pm.setPassword(cursor.getString(3));
-                // Adding password to list
-                pmList.add(pm);
-            } while (cursor.moveToNext());
-        }
-
-        // return password list
-        return pmList;
+        // return password list cursor
+        return cursor;
     }
 
     // Updating single password
@@ -119,7 +110,7 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(KEY_USERID, pm.getUserId());
         values.put(KEY_URL, pm.getUrl());
-        values.put(KEY_PASSWORD, pm.getUrl());
+        values.put(KEY_PASSWORD, pm.getPassword());
 
         // updating row
         return db.update(TABLE_PASSWORDS, values, KEY_ID + " = ?",
@@ -140,7 +131,6 @@ public class DBHelper extends SQLiteOpenHelper {
         String countQuery = "SELECT  * FROM " + TABLE_PASSWORDS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
-        cursor.close();
 
         // return count
         return cursor.getCount();
