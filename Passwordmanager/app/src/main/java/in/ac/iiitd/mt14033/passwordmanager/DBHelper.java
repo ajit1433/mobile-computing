@@ -122,7 +122,6 @@ public class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_PASSWORDS, KEY_ID + " = ?",
                 new String[] { String.valueOf(pm.getID()) });
-        db.close();
     }
 
 

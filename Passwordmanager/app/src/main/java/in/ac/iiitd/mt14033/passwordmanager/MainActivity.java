@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,6 +21,11 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 import java.util.List;
 import java.util.Random;
 
@@ -27,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     final private String TAG = "mt14033.PM.MainAct";
     final private String PASSWORD_MANAGER_PREF = "PASSWORD_MANAGER";
+    // Database Name
+    private static final String DATABASE_NAME = "PasswordManager.sqlitedb";
+
     private EditText passwordLength;
     private EditText passwordUrl;
     private TextView generatedPassword;
@@ -166,6 +175,52 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "in backupButton");
+                final String inFileName = "/data/data/in.ac.iiitd.mt14033.passwordmanager/databases/"+DATABASE_NAME;
+                File dbFile = new File(inFileName);
+                FileInputStream fis;
+                OutputStream output;
+                try {
+                    fis = new FileInputStream(dbFile);
+                } catch (FileNotFoundException e) {
+                    Log.d(TAG,"DB File not found during backup.");
+                    Toast toast = Toast.makeText(getApplicationContext(), "DB file not found in location", Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+
+                String outFileName = Environment.getExternalStorageDirectory()+"/"+DATABASE_NAME;
+                Log.d(TAG, "DB outFileName: "+outFileName);
+
+                // Open the empty db as the output stream
+                try {
+                    output = new FileOutputStream(outFileName);
+                } catch (FileNotFoundException e) {
+                    Log.d(TAG,"Cannot create db file for backup at external location."+e.toString());
+                    Toast toast = Toast.makeText(getApplicationContext(), "Cannot create db file for backup at external location."+e.toString(), Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
+
+                // Transfer bytes from the inputfile to the outputfile
+                byte[] buffer = new byte[1024];
+                int length;
+                try {
+                    while ((length = fis.read(buffer))>0){
+                        output.write(buffer, 0, length);
+                    }
+
+                    // Close the streams
+                    output.flush();
+                    output.close();
+                    fis.close();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Backup taken successfully.", Toast.LENGTH_SHORT);
+                    toast.show();
+                } catch (java.io.IOException e) {
+                    Log.d(TAG,"Error: "+e.toString());
+                    Toast toast = Toast.makeText(getApplicationContext(), "Error: "+e.toString(), Toast.LENGTH_SHORT);
+                    toast.show();
+                    return;
+                }
                 backupButton.setEnabled(true);
             }
 

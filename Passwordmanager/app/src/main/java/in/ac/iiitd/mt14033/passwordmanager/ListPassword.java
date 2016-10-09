@@ -44,7 +44,7 @@ public class ListPassword extends AppCompatActivity {
                 dbh.deletePassword(pm);
                 Toast toast = Toast.makeText(getApplicationContext(), "Entry deleted from SqliteDB. Reload view to see updated password list.", Toast.LENGTH_SHORT);
                 toast.show();
-                return false;
+                return true;
             }
         });
 
@@ -57,25 +57,5 @@ public class ListPassword extends AppCompatActivity {
                 startActivity(in);
             }
         });
-
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//
-//            @Override
-//            public void onItemClick(AdapterView arg0, View arg1, int arg2,
-//                                    long arg3) {
-//                // TODO Auto-generated method stub
-//                Bundle passdata = new Bundle();
-//                Cursor listCursor = (Cursor) arg0.getItemAtPosition(arg2);
-//                int nameId = listCursor.getInt(listCursor
-//                        .getColumnIndex(helper_ob.KEY_ID));
-//                // Toast.makeText(getApplicationContext(),
-//                // Integer.toString(nameId), 500).show();
-//                passdata.putInt("keyid", nameId);
-//                Intent passIntent = new Intent(MainActivity.this,
-//                        EditActivity.class);
-//                passIntent.putExtras(passdata);
-//                startActivity(passIntent);
-//            }
-//        });
     }
 }
